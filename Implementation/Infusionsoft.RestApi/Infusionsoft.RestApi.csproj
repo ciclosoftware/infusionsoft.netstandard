@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>com.ciclosoftware.infusionsoft.restapi</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Contacts\" />
+    <Folder Include="Tags\" />
+    <Folder Include="RestHooks\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="ServiceStack.Text" Version="5.1.0" />
+  </ItemGroup>
+
+</Project>
