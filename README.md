@@ -9,4 +9,4 @@ The functionality is growing as it is migrated from another project step-by-step
 
 Please let us know if there is anything you need urgently. 
 
-The implementation comes from a project that has ended, and that we can proudly publish as Open Source. May it help you to successfully implement your Infusionsoft integrations with .NET ! 
+The implementation comes from a project that has ended, and that we can proudly publish as Open Source. May it help you to successfully implement your Infusionsoft integrations with .NET (or even Angular as well)! 
