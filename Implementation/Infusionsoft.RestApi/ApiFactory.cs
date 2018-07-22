@@ -6,8 +6,8 @@ namespace com.ciclosoftware.infusionsoft.restapi
 {
     public interface IApiFactory
     {
-        string ApplicationKey { set; }
-        string ApplicationSecret { set; }
+        string ClientId { set; }
+        string ClientSecret { set; }
         IInfusionsoftAuthorization GetInfusionsoftAuthorization();
     }
 
@@ -16,34 +16,34 @@ namespace com.ciclosoftware.infusionsoft.restapi
         public const string ApiUrl = "https://api.infusionsoft.com/crm/rest/v1";
         public const string TokenUrl = "https://api.infusionsoft.com/token";
 
-        private string _applicationKey;
-        private string _applicationSecret;
-        private InfusionsoftService _service;
+        private string _clientId;
+        private string _clientSecret;
+        private readonly InfusionsoftService _service;
 
         private ApiFactory()
         {
             _service = new InfusionsoftService();
         }
 
-        public string ApplicationKey
+        public string ClientId
         {
-            set { _applicationKey = value; }
+            set { _clientId = value; }
             internal get
             {
-                if (String.IsNullOrEmpty(_applicationKey))
-                    throw new ApplicationException("You have to provide an application key in ApiFactory");
-                return _applicationKey;
+                if (String.IsNullOrEmpty(_clientId))
+                    throw new ApplicationException("You have to provide an client key in ApiFactory");
+                return _clientId;
             }
         }
 
-        public string ApplicationSecret
+        public string ClientSecret
         {
-            set { _applicationSecret = value; }
+            set { _clientSecret = value; }
             internal get
             {
-                if (String.IsNullOrEmpty(_applicationSecret))
-                    throw new ApplicationException("You have to provide the application secret in ApiFactory");
-                return _applicationSecret;
+                if (String.IsNullOrEmpty(_clientSecret))
+                    throw new ApplicationException("You have to provide the client secret in ApiFactory");
+                return _clientSecret;
             }
         }
 
@@ -55,19 +55,19 @@ namespace com.ciclosoftware.infusionsoft.restapi
         internal static ApiFactory Singleton { get; private set; }
 
         /// <summary>
-        /// Create a new instance. Key and Secret can be defined now or later.
+        /// Create a new instance. Id and Secret can be defined now or later.
         /// </summary>
-        /// <param name="applicationKey">developer.infusionsoft.com</param>
-        /// <param name="applicationSecret">developer.infusionsoft.com</param>
+        /// <param name="clientId">developer.infusionsoft.com</param>
+        /// <param name="clientSecret">developer.infusionsoft.com</param>
         /// <returns></returns>
-        public static IApiFactory GetApiFactorySingleton(string applicationKey = null, string applicationSecret = null)
+        public static IApiFactory GetApiFactorySingleton(string clientId = null, string clientSecret = null)
         {
             if (Singleton == null)
             {
                 Singleton = new ApiFactory
                 {
-                    ApplicationKey = applicationKey,
-                    ApplicationSecret = applicationSecret
+                    ClientId = clientId,
+                    ClientSecret = clientSecret
                 };
             }
             return Singleton;

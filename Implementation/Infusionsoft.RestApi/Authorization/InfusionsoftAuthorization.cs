@@ -11,7 +11,7 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
 {
     public interface IInfusionsoftAuthorization
     {
-        Task<InfusionsoftToken> GetToken(string user, string authorizationCode, string redirectUrl = null);
+        Task<InfusionsoftToken> GetToken(string authorizationCode, string redirectUrl = null);
         Task<InfusionsoftToken> RefreshToken(InfusionsoftToken token);
     }
 
@@ -24,17 +24,16 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
             _infusionsoftService = infusionsoftService;
         }
 
-        public async Task<InfusionsoftToken> GetToken(string user, string authorizationCode, string redirectUrl)
+        public async Task<InfusionsoftToken> GetToken(string authorizationCode, string redirectUrl)
         {
             if (string.IsNullOrEmpty(authorizationCode))
                 return null;
-            var infAppKey = ApiFactory.Singleton.ApplicationKey;
-            var infAppSecret = ApiFactory.Singleton.ApplicationSecret;
-            var dataString =
-                $"code={authorizationCode}&client_id={infAppKey}&client_secret={infAppSecret}&redirect_uri={HttpUtility.UrlEncode(redirectUrl)}&grant_type=authorization_code";
+            var clientId = ApiFactory.Singleton.ClientId;
+            var clientSecret = ApiFactory.Singleton.ClientSecret;
+            var dataString =  $"code={authorizationCode}&client_id={clientId}&client_secret={clientSecret}&redirect_uri={HttpUtility.UrlEncode(redirectUrl)}&grant_type=authorization_code";
             try
             {
-                var resultJson = await _infusionsoftService.Post("https://api.infusionsoft.com/token", dataString);
+                var resultJson = await _infusionsoftService.Post(ApiFactory.TokenUrl, dataString);
                 var tokenData = JsonConvert.DeserializeObject<InfusionsoftToken>(resultJson);
                 var newToken = GetFullToken(tokenData);
                 return newToken;
@@ -51,9 +50,9 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
             try
             {
                 var dataString =$"grant_type=refresh_token&refresh_token={token.RefreshToken}";
-                var infAppKey = ApiFactory.Singleton.ApplicationKey;
-                var infAppSecret = ApiFactory.Singleton.ApplicationSecret;
-                var alt1 =$"{infAppKey}:{infAppSecret}";
+                var clientId = ApiFactory.Singleton.ClientId;
+                var clientSecret = ApiFactory.Singleton.ClientSecret;
+                var alt1 =$"{clientId}:{clientSecret}";
                 var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(alt1));
                 var alt = $"Basic {base64}";
                 var resultJson = await _infusionsoftService.Post(ApiFactory.TokenUrl, dataString, altAuthHeader: alt);
