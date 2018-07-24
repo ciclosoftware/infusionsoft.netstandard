@@ -9,10 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7ECAF42C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infusionsoft.RestApi", "Implementation\Infusionsoft.RestApi\Infusionsoft.RestApi.csproj", "{FD7601B2-C05A-45A9-8F0D-227FE823A13A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infusionsoft.RestApi.IntegrationTests", "Tests\Infusionsoft.RestApi.IntegrationTests\Infusionsoft.RestApi.IntegrationTests.csproj", "{72C4A852-600B-414D-A2F0-EF3794621830}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infusionsoft.RestApi.IntegrationTests", "Tests\Infusionsoft.RestApi.IntegrationTests\Infusionsoft.RestApi.IntegrationTests.csproj", "{72C4A852-600B-414D-A2F0-EF3794621830}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A09F6CD-F24F-4630-92C7-8217E22A6A2D}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
