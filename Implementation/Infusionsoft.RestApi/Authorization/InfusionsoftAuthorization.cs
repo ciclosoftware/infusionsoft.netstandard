@@ -12,7 +12,7 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
     public interface IInfusionsoftAuthorization
     {
         Task<InfusionsoftToken> GetToken(string authorizationCode, string redirectUrl = null);
-        Task<InfusionsoftToken> RefreshToken(InfusionsoftToken token);
+        Task<InfusionsoftToken> RefreshToken(string refreshToken);
     }
 
     public class InfusionsoftAuthorization : IInfusionsoftAuthorization
@@ -45,11 +45,11 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
             }
         }
 
-        public async Task<InfusionsoftToken> RefreshToken(InfusionsoftToken token)
+        public async Task<InfusionsoftToken> RefreshToken(string refreshToken)
         {
             try
             {
-                var dataString =$"grant_type=refresh_token&refresh_token={token.RefreshToken}";
+                var dataString =$"grant_type=refresh_token&refresh_token={refreshToken}";
                 var clientId = ApiFactory.Singleton.ClientId;
                 var clientSecret = ApiFactory.Singleton.ClientSecret;
                 var alt1 =$"{clientId}:{clientSecret}";
