@@ -1,5 +1,6 @@
 ﻿using System;
 using com.ciclosoftware.infusionsoft.restapi.Authorization;
+using com.ciclosoftware.infusionsoft.restapi.Contacts;
 using com.ciclosoftware.infusionsoft.restapi.Service;
 
 namespace com.ciclosoftware.infusionsoft.restapi
@@ -8,7 +9,8 @@ namespace com.ciclosoftware.infusionsoft.restapi
     {
         string ClientId { set; }
         string ClientSecret { set; }
-        IInfusionsoftAuthorization GetInfusionsoftAuthorization();
+        IInfusionsoftAuthorization GetAuthenticationApi();
+        IInfusionsoftContacts GetContactsApi();
     }
 
     public class ApiFactory : IApiFactory
@@ -47,9 +49,14 @@ namespace com.ciclosoftware.infusionsoft.restapi
             }
         }
 
-        public IInfusionsoftAuthorization GetInfusionsoftAuthorization()
+        public IInfusionsoftAuthorization GetAuthenticationApi()
         {
             return new InfusionsoftAuthorization(_service);
+        }
+
+        public IInfusionsoftContacts GetContactsApi()
+        {
+            return new InfusionsoftContacts(_service);
         }
 
         internal static ApiFactory Singleton { get; private set; }

@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contacts\" />
     <Folder Include="Tags\" />
     <Folder Include="RestHooks\" />
   </ItemGroup>

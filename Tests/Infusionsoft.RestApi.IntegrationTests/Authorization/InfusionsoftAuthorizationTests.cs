@@ -29,7 +29,7 @@ namespace Infusionsoft.RestApi.IntegrationTests.Authorization
         {
             Task.Run(async () =>
             {
-                var token = await _api.GetInfusionsoftAuthorization().GetToken(authCode, "null");
+                var token = await _api.GetAuthenticationApi().GetToken(authCode, "null");
                 Assert.NotNull(token);
                 _output.WriteLine($"Token: {token.AccessToken}");
                 _output.WriteLine($"Refresh Token: {token.RefreshToken}");
@@ -48,7 +48,7 @@ namespace Infusionsoft.RestApi.IntegrationTests.Authorization
         {
             Task.Run(async () =>
             {
-                var token = await _api.GetInfusionsoftAuthorization().RefreshToken(refreshToken);
+                var token = await _api.GetAuthenticationApi().RefreshToken(refreshToken);
                 Assert.NotNull(token);
                 _output.WriteLine($"New Token: {token.AccessToken}");
                 _output.WriteLine($"New Refresh Token: {token.RefreshToken}");

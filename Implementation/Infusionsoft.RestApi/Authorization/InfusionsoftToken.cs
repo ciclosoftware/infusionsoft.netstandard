@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
-namespace Slybot.Core.Api.Infusionsoft.Models
+namespace com.ciclosoftware.infusionsoft.restapi.Authorization
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class InfusionsoftToken

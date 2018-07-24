@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.Web;
 using com.ciclosoftware.infusionsoft.restapi.Service;
 using Newtonsoft.Json;
-using Slybot.Core.Api.Infusionsoft.Models;
 
 namespace com.ciclosoftware.infusionsoft.restapi.Authorization
 {
@@ -15,11 +14,11 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
         Task<InfusionsoftToken> RefreshToken(string refreshToken);
     }
 
-    public class InfusionsoftAuthorization : IInfusionsoftAuthorization
+    internal class InfusionsoftAuthorization : IInfusionsoftAuthorization
     {
         private readonly IInfusionsoftService _infusionsoftService;
 
-        public InfusionsoftAuthorization(IInfusionsoftService infusionsoftService)
+        internal InfusionsoftAuthorization(IInfusionsoftService infusionsoftService)
         {
             _infusionsoftService = infusionsoftService;
         }
