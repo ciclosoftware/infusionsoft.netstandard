@@ -10,16 +10,19 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
     {
         Task<InfusionsoftContactResults> GetContacts(string token);
         Task<InfusionsoftContact> GetContact(string token, int id);
+
         /// <summary>
         /// https://developer.infusionsoft.com/docs/rest/#!/Contact/createOrUpdateContactUsingPUT
         /// </summary>
         /// <param name="duplicateOption">Default 'Email' - can also be 'EmailAndName'</param>
         Task<InfusionsoftContact> CreateContact(string token, InfusionsoftContact contact, string optInReason = null, string duplicateOption = "Email");
+       
         /// <summary>
         /// https://developer.infusionsoft.com/docs/rest/#!/Contact/createOrUpdateContactUsingPUT
         /// </summary>
         /// <param name="duplicateOption">Default 'Email' - can also be 'EmailAndName'</param>
         Task<InfusionsoftContact> UpdateContact(string token, InfusionsoftContact contact, string optInReason = null, string duplicateOption = "Email");
+
         Task<bool> DeleteContact(string token, int id);
     }
 
@@ -80,8 +83,8 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
         {
             try
             {
-                contact.OptInReason = optInReason;
-                contact.DuplicateOption = duplicateOption;
+                //contact.OptInReason = optInReason;
+                //contact.DuplicateOption = duplicateOption;
                 var json = JsonConvert.SerializeObject(contact);
                 var resultJson =
                     await _infusionsoftService.Post($"{ApiFactory.ApiUrl}/contacts",

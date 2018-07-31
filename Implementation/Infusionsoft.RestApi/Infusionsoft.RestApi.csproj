@@ -15,4 +15,10 @@
     <PackageReference Include="ServiceStack.Text" Version="5.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration">
+      <HintPath>C:\Users\Stefan\.nuget\packages\microsoft.extensions.configuration\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
