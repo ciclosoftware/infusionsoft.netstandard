@@ -15,6 +15,6 @@ https://www.ciclosoftware.com/2018/07/30/infusionsoft-netstandard/
 
 Please let me know if you need anything that is still missing, and I can prioritize it! 
 
-The implementation comes from a project that has ended, and that we can proudly publish as Open Source. May it help you to successfully implement your Infusionsoft integrations with .NET (or even Angular as well)! 
+The implementation comes from a project that has ended, and that I can proudly publish as Open Source. May it help you to successfully implement your Infusionsoft integrations with .NET (or even Angular as well)! 
 
 HAPPY PLANTING
