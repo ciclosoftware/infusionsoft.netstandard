@@ -1,6 +1,6 @@
 ﻿{
     //after adding your keys, you should run this command to not commit your secrets
-    //git update-index --assume-unchanged Tests/Infusionsoft.RestApi.IntegrationTests/MyKeys.cs
+    //git update-index --assume-unchanged Tests/Infusionsoft.RestApi.IntegrationTests/testsettings.json
     //git update-index --no-assume-unchanged .... to revert that
 
     "InfusionsoftClientId": "",
