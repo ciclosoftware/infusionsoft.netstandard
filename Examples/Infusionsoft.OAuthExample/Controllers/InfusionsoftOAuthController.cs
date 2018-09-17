@@ -41,7 +41,7 @@ namespace Infusionsoft.OAuthExample.Controllers
         {
             try
             {
-                var token = await _infusionsoftAuthorization.FinishAuth(_infClientId, _infClientSecret, code, originalurl);
+                var token = await _infusionsoftAuthorization.GetToken(code, originalurl);
                 Program.InfusionsoftToken = token;
                 //The UI never gets the token. That would be exposing it to unsafe environments. 
                 //The user trusted this WebApp by authorizing it! So be trustworthy and protect the token!

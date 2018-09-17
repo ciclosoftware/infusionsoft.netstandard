@@ -8,7 +8,7 @@ namespace com.ciclosoftware.infusionsoft.restapi
 {
     public interface IApiFactory
     {
-        string ClientId { set; }
+        string ClientId { get; set; }
         string ClientSecret { set; }
         IInfusionsoftAuthorization GetAuthenticationApi();
         IInfusionsoftContacts GetContactsApi();
@@ -32,10 +32,10 @@ namespace com.ciclosoftware.infusionsoft.restapi
         public string ClientId
         {
             set { _clientId = value; }
-            internal get
+            get
             {
                 if (String.IsNullOrEmpty(_clientId))
-                    throw new ApplicationException("You have to provide an client key in ApiFactory");
+                    throw new ApplicationException("You have to provide a client key in ApiFactory");
                 return _clientId;
             }
         }
@@ -66,15 +66,15 @@ namespace com.ciclosoftware.infusionsoft.restapi
             return new InfusionsoftUsers(_service);
         }
 
-        internal static ApiFactory Singleton { get; private set; }
+        public static ApiFactory Singleton { get; private set; }
 
         /// <summary>
-        /// Create a new instance. Id and Secret can be defined now or later.
+        /// Setup the factory, and provide your clientId and secret (recommended on startup).
         /// </summary>
         /// <param name="clientId">developer.infusionsoft.com</param>
         /// <param name="clientSecret">developer.infusionsoft.com</param>
         /// <returns></returns>
-        public static IApiFactory GetApiFactorySingleton(string clientId = null, string clientSecret = null)
+        public static IApiFactory SetupApiFactorySingleton(string clientId, string clientSecret)
         {
             if (Singleton == null)
             {

@@ -25,7 +25,7 @@ namespace Infusionsoft.RestApi.Conctacts
             {
                 var contactsResult = await _fixture.GetContacts(ValidToken);
                 Assert.NotNull(contactsResult);
-                var contact = await _fixture.GetContact(ValidToken, contactsResult.Contacts[0].Id);
+                var contact = await _fixture.GetContact(ValidToken, contactsResult.Contacts[0].Id.Value);
                 Assert.NotNull(contact);
 
             }).GetAwaiter().GetResult();
@@ -51,7 +51,7 @@ namespace Infusionsoft.RestApi.Conctacts
                 Assert.Equal("Ben", newContact.GivenName);
 
                 //read one
-                var ben = await _fixture.GetContact(ValidToken, newContact.Id);
+                var ben = await _fixture.GetContact(ValidToken, newContact.Id.Value);
                 Assert.NotNull(ben);
                 Assert.Equal("Ben", ben.GivenName);
 

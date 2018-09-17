@@ -1,14 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using com.ciclosoftware.infusionsoft.restapi.Service;
+using com.ciclosoftware.infusionsoft.restapi.Tags;
 using Newtonsoft.Json;
 
 namespace com.ciclosoftware.infusionsoft.restapi.Contacts
 {
     public interface IInfusionsoftContacts
     {
-        Task<InfusionsoftContactResults> GetContacts(string token);
+        Task<InfusionsoftContactResults> GetContacts(string token, string email = null);
         Task<InfusionsoftContact> GetContact(string token, int id);
 
         /// <summary>
@@ -24,22 +26,31 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
         Task<InfusionsoftContact> UpdateContact(string token, InfusionsoftContact contact, string optInReason = null, string duplicateOption = "Email");
 
         Task<bool> DeleteContact(string token, int id);
+
+        Task<List<TagApplication>> GetAppliedTags(string token, int contactId);
+
+        Task<bool> ApplyTag(string token, int contactId, int tagId);
     }
 
-    internal class InfusionsoftContacts : IInfusionsoftContacts
+    public class InfusionsoftContacts : IInfusionsoftContacts
     {
         private readonly IInfusionsoftService _infusionsoftService;
 
-        internal InfusionsoftContacts(IInfusionsoftService infusionsoftService)
+        public InfusionsoftContacts(IInfusionsoftService infusionsoftService)
         {
             _infusionsoftService = infusionsoftService;
         }
 
-        public async Task<InfusionsoftContactResults> GetContacts(string token)
+        public async Task<InfusionsoftContactResults> GetContacts(string token, string email = null)
         {
             try
             {
-                var contactResult = await _infusionsoftService.Get($"{ApiFactory.ApiUrl}/contacts", accessToken: token);
+                var url = $"{ApiFactory.ApiUrl}/contacts";
+                if (!string.IsNullOrEmpty(email))
+                {
+                    url = $"{url}?email={email}";
+                }
+                var contactResult = await _infusionsoftService.Get(url, accessToken: token);
                 if (string.IsNullOrEmpty(contactResult))
                 {
                     throw new NullReferenceException("Api result is null or empty");
@@ -52,7 +63,7 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
             catch (Exception e)
             {
                 var msg =
-                    $"[Infusionsoft] Unexpected error calling and deserialising '/contacts': {e.Message}, {e.InnerException?.Message}";
+                    $"[Infusionsoft] Unexpected error getting and deserialising '/contacts': {e.Message}, {e.InnerException?.Message}";
                 Debug.WriteLine(msg);
                 throw new ApplicationException(msg, e);
             }
@@ -83,9 +94,9 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
         {
             try
             {
-                //contact.OptInReason = optInReason;
-                //contact.DuplicateOption = duplicateOption;
-                var json = JsonConvert.SerializeObject(contact);
+                contact.OptInReason = optInReason;
+                contact.DuplicateOption = duplicateOption;
+                var json = JsonConvert.SerializeObject(contact, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
                 var resultJson =
                     await _infusionsoftService.Post($"{ApiFactory.ApiUrl}/contacts",
                         contentType: ContentType.Json, data: json, accessToken: token);
@@ -111,7 +122,7 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
             {
                 contact.OptInReason = optInReason;
                 contact.DuplicateOption = duplicateOption;
-                var json = JsonConvert.SerializeObject(contact);
+                var json = JsonConvert.SerializeObject(contact, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
                 var resultJson =
                     await _infusionsoftService.Put($"{ApiFactory.ApiUrl}/contacts", json, token);
                 if (string.IsNullOrEmpty(resultJson))
@@ -143,6 +154,54 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
             {
                 var msg =
                     $"[Infusionsoft] Unexpected error deleting '/contacts/{id}': {e.Message}, {e.InnerException?.Message}";
+                Debug.WriteLine(msg);
+                throw new ApplicationException(msg, e);
+            }
+        }
+        public async Task<List<TagApplication>> GetAppliedTags(string token, int contactId)
+        {
+            try
+            {
+                var resultJson = await _infusionsoftService.Get($"{ApiFactory.ApiUrl}/contacts/{contactId}/tags", accessToken: token);
+                if (string.IsNullOrEmpty(resultJson))
+                {
+                    throw new NullReferenceException("Api result is null or empty");
+                }
+                var tags = JsonConvert.DeserializeObject<AppliedTagsResult>(resultJson);
+                return tags.Tags;
+            }
+            catch (Exception e)
+            {
+                var msg =
+                    $"[Infusionsoft] Unexpected error getting and deserialising '/contacts/{contactId}/tags': {e.Message}, {e.InnerException?.Message}";
+                throw new ApplicationException(msg, e);
+            }
+        }
+
+        public async Task<bool> ApplyTag(string token, int contactId, int tagId)
+        {
+            try
+            {
+                var atr = new ApplyTagsRequest { TagIds = new List<int>(new[] {tagId}) };
+                var json = JsonConvert.SerializeObject(atr, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                var resultJson =
+                    await _infusionsoftService.Post($"{ApiFactory.ApiUrl}/contacts/{contactId}/tags",
+                        contentType: ContentType.Json, data: json, accessToken: token);
+                if (string.IsNullOrEmpty(resultJson))
+                {
+                    throw new NullReferenceException("Api result is null or empty");
+                }
+                var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(resultJson);
+                if (dict.ContainsKey($"{tagId}") && dict[$"{tagId}"].Equals("SUCCESS"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                var msg =
+                    $"[Infusionsoft] Unexpected error posting and deserialising '/contacts': {e.Message}, {e.InnerException?.Message}";
                 Debug.WriteLine(msg);
                 throw new ApplicationException(msg, e);
             }

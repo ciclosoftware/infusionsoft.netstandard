@@ -15,7 +15,7 @@ namespace com.ciclosoftware.infusionsoft.restapi.Users
     {
         private readonly IInfusionsoftService _infusionsoftService;
 
-        internal InfusionsoftUsers(IInfusionsoftService infusionsoftService)
+        public InfusionsoftUsers(IInfusionsoftService infusionsoftService)
         {
             _infusionsoftService = infusionsoftService;
         }

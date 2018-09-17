@@ -12,7 +12,6 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
     {
         Task<InfusionsoftToken> GetToken(string authorizationCode, string redirectUrl = null);
         Task<InfusionsoftToken> RefreshToken(string refreshToken);
-        Task<InfusionsoftToken> FinishAuth(string infClientId, string infClientSecret, string code, string originalurl);
     }
 
     public class InfusionsoftAuthorization : IInfusionsoftAuthorization
@@ -82,24 +81,6 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
                 IssuedAt = DateTime.UtcNow
             };
             return newToken;
-        }
-
-        public async Task<InfusionsoftToken> FinishAuth(string infClientId, string infClientSecret, string code, string originalurl)
-        {
-            var dataString =
-                $"code={code}&client_id={infClientId}&client_secret={infClientSecret}&redirect_uri={HttpUtility.UrlEncode(originalurl)}&grant_type=authorization_code";
-            try
-            {
-                var resultJson = await _infusionsoftService.Post("https://api.infusionsoft.com/token", dataString);
-                var tokenData = JsonConvert.DeserializeObject<InfusionsoftToken>(resultJson);
-                var newToken = GetFullToken(tokenData);
-                return newToken;
-            }
-            catch (Exception e)
-            {
-                var msg = $"[Infusionsoft] Error getting access token: {e.Message}, {e.InnerException?.Message}";
-                throw new ApplicationException(msg, e);
-            }
         }
     }
 }

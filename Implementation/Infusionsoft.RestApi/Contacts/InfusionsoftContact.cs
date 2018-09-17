@@ -7,7 +7,7 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
     public class InfusionsoftContact
     {
         [JsonProperty("id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [JsonProperty("middle_name")]
         public string MiddleName { get; set; }
@@ -47,10 +47,10 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
         public List<int> TagIds { get; set; }
 
         [JsonProperty("anniversary")]
-        public DateTime Anniversary { get; set; }
+        public DateTime? Anniversary { get; set; }
 
         [JsonProperty("birthday")]
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
 
         [JsonProperty("contact_type")]
         public string ConctactType { get; set; }
@@ -65,7 +65,7 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
         public string JobTitle { get; set; }
 
         [JsonProperty("lead_source_id")]
-        public int LeadSourceId { get; set; }
+        public int? LeadSourceId { get; set; }
 
         [JsonProperty("notes")]
         public string Notes { get; set; }
