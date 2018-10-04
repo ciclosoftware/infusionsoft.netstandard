@@ -16,8 +16,7 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
         /// <summary>
         /// https://developer.infusionsoft.com/docs/rest/#!/Contact/createOrUpdateContactUsingPUT
         /// </summary>
-        /// <param name="duplicateOption">Default 'Email' - can also be 'EmailAndName'</param>
-        Task<InfusionsoftContact> CreateContact(string token, InfusionsoftContact contact, string optInReason = null, string duplicateOption = "Email");
+        Task<InfusionsoftContact> CreateContact(string token, InfusionsoftContact contact, string optInReason = null);
        
         /// <summary>
         /// https://developer.infusionsoft.com/docs/rest/#!/Contact/createOrUpdateContactUsingPUT
@@ -90,12 +89,11 @@ namespace com.ciclosoftware.infusionsoft.restapi.Contacts
             }
         }
 
-        public async Task<InfusionsoftContact> CreateContact(string token, InfusionsoftContact contact, string optInReason = null, string duplicateOption = "Email")
+        public async Task<InfusionsoftContact> CreateContact(string token, InfusionsoftContact contact, string optInReason = null)
         {
             try
             {
                 contact.OptInReason = optInReason;
-                contact.DuplicateOption = duplicateOption;
                 var json = JsonConvert.SerializeObject(contact, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
                 var resultJson =
                     await _infusionsoftService.Post($"{ApiFactory.ApiUrl}/contacts",

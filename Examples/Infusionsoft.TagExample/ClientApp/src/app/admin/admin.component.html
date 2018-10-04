@@ -1,0 +1,39 @@
+<div class="admin">
+    <div class="title">Admin</div>
+    <div>To setup authorization...<br><br>
+      1. Go to <a href="https://accounts.infusionsoft.com/app/central/home" target="_blank">this Infusionsoft page</a> <br><br>
+      2. Press 'API Access' next to the account you want to use<br><br>
+      3. Select the 'Partner' tab<br><br>
+      4. Enter the client_id<br><br>
+    </div>
+
+    <div class="input">
+      <label>ClientId: </label>
+      <input [ngModel]="clientid" disabled=true>
+    </div>
+
+    <div>
+      5. Press 'Generate Auth Code'<br><br>
+      6. Copy the auth code here:
+    </div>
+
+    <div class="input">
+      <label>AuthCode: </label>
+      <input [(ngModel)]="authcode">
+    </div>
+
+    <div>
+      7. Press 'Authorize' to setup auth in the backend<br><br>
+    </div>
+
+    <div class="buttons">
+      <button (click)="authorize()">Authorize</button>
+      <button (click)="test()">Test</button>
+      <button (click)="refresh()">Refresh</button>
+      <button (click)="reset()">Reset</button>
+    </div>
+
+    <div>
+      This authorization could also happen with a popup dialog showing you Infusionsoft.
+    </div>
+  </div>

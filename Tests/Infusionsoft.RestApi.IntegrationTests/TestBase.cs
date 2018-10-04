@@ -18,7 +18,7 @@ namespace Infusionsoft.RestApi
 
             var clientId = TestService.Configuration["InfusionsoftClientId"];
             var clientSecret = TestService.Configuration["InfusionsoftClientSecret"];
-            ApiFactory = com.ciclosoftware.infusionsoft.restapi.ApiFactory.SetupApiFactorySingleton(clientId, clientSecret);
+            ApiFactory = new ApiFactory(clientId, clientSecret);
 
             ValidToken = TestService.Configuration["ValidToken"];
             ValidAuthCode = TestService.Configuration["ValidAuthCode"];

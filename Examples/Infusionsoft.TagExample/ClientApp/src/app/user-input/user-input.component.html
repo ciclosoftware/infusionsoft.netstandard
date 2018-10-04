@@ -1,0 +1,26 @@
+<div class="userinput">
+  <div class="title">User Input</div>
+  <div>When the user sends his mail address, the backend <br><br>
+    1. Gets or creates the Infusionsoft contact <br><br>
+    2. Adds a tag to this contact (tag must exist already)<br><br>
+  </div>
+  <div class="input">
+    <label>Email: </label>
+    <input [(ngModel)]="email">
+  </div>
+  <div class="input">
+    <label>TagId: </label>
+    <input [(ngModel)]="tagId" type="number">
+  </div>
+  <button (click)="send()">Send</button>
+</div>
+
+<div class="tags">
+  <div class="title">Tags</div>
+  <div class="taglist">
+    <div class="tag" *ngFor="let tag of tags">
+      {{tag.id}} - {{tag.name}}
+    </div>
+  </div>
+  <button (click)="loadTags()">Get all Tags</button>
+</div>

@@ -16,10 +16,12 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
 
     public class InfusionsoftAuthorization : IInfusionsoftAuthorization
     {
+        private readonly IApiFactory _apiFactory;
         private readonly IInfusionsoftService _infusionsoftService;
 
-        public InfusionsoftAuthorization(IInfusionsoftService infusionsoftService)
+        public InfusionsoftAuthorization(IApiFactory apiFactory, IInfusionsoftService infusionsoftService)
         {
+            _apiFactory = apiFactory;
             _infusionsoftService = infusionsoftService;
         }
 
@@ -27,8 +29,8 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
         {
             if (string.IsNullOrEmpty(authorizationCode))
                 return null;
-            var clientId = ApiFactory.Singleton.ClientId;
-            var clientSecret = ApiFactory.Singleton.ClientSecret;
+            var clientId = ((ApiFactory)_apiFactory).ClientId;
+            var clientSecret = ((ApiFactory)_apiFactory).ClientSecret;
             var dataString =  $"code={authorizationCode}&client_id={clientId}&client_secret={clientSecret}&redirect_uri={HttpUtility.UrlEncode(redirectUrl)}&grant_type=authorization_code";
             try
             {
@@ -49,8 +51,8 @@ namespace com.ciclosoftware.infusionsoft.restapi.Authorization
             try
             {
                 var dataString =$"grant_type=refresh_token&refresh_token={refreshToken}";
-                var clientId = ApiFactory.Singleton.ClientId;
-                var clientSecret = ApiFactory.Singleton.ClientSecret;
+                var clientId = ((ApiFactory)_apiFactory).ClientId;
+                var clientSecret = ((ApiFactory)_apiFactory).ClientSecret;
                 var alt1 =$"{clientId}:{clientSecret}";
                 var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(alt1));
                 var alt = $"Basic {base64}";

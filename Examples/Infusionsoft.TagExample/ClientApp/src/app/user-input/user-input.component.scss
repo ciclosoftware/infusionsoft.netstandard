@@ -1,0 +1,44 @@
+.userinput
+{
+    border: 1px solid black;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    padding: 5px;
+    .title
+    {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .input 
+    {
+        display: flex;
+        margin-bottom: 15px;
+        label { flex: 0; }
+        input { flex: 1; }
+    }
+}
+.tags {
+  border: 1px solid black;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  padding: 5px;
+
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .taglist {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}
