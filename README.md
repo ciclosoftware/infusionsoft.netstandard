@@ -3,15 +3,21 @@ Implementation for the Infusionsoft REST Api on .NET Standard.
 
 It includes IntegrationTests which also serve as examples for you. They can be run if you provide Authorization Code, Access Token and/or Refresh Token.
 
-It will include an E2E test as example solution for OAuth2 Authorization Code workflow using a .NET Core WebApp with an Angular 6 Frontend. 
-
-Also, there will be implementaions and examples for registering and listening to RestHooks.
-
 It will be available through NuGet anytime soon!
 
+Examples
+
+Infusionsoft.TagExample
+.NET Core and Angular 6 WebApp that allows to generate a token (using an auth code from Infusionsoft's login page), to read all existing tags, and to tag a contact by email address and tag id. If the contact doesn't exist, it's created. You can try the app here:
+https://infusionsofttagexample.azurewebsites.net/
+
+Infusionsoft.OAuthExample
+In work. Will show the authorization with the real OAuth flow popup window showing the Infusionsoft authorization page. From there, the WebApp generates the Token automatically. 
+
 The functionality is growing as it is migrated from another project step-by-step, but it won't include YET a complete coverage of Infusionsoft's API. 
-The first set of functions is documented in this post:
+Functions and examples are also documented here:
 https://www.ciclosoftware.com/2018/07/30/infusionsoft-netstandard/
+https://www.ciclosoftware.com/2018/10/04/tag-infusionsoft-contacts-netcore/
 
 Please let me know if you need anything that is still missing, and I can prioritize it! 
 
